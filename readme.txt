@@ -5,7 +5,7 @@ Introduction
 ----------------
 
 syncweb is a command line tool enabling programmers to use the
-literate programming[1] development methodology, using the noweb[2]
+literate programming[1] development methodology, using the literate[4]
 tool, while still being able to modify the generated files
 from the literate document. syncweb provides a way to
 "synchronize" the possibly modified original document with its
@@ -180,4 +180,5 @@ References
 [1] http://en.wikipedia.org/wiki/Literate_programming
 [2] http://www.cs.tufts.edu/~nr/noweb/
 [3] http://www.seas.upenn.edu/~bcpierce/unison/
+[4] https://github.com/zyedidia/Literate
 
