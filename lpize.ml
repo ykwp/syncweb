@@ -62,11 +62,11 @@ let lpize file =
       pr "";
     
     let base = (*Filename.basename*) file in
-    pr (spf "<<%s>>=" base);
+    pr (spf "--- %s" base);
     Common.cat file +> List.iter (fun s ->
       pr (untabify s);
     );
-    pr "@";
+    pr "---";
     pr "";
     pr "";
 
@@ -196,9 +196,9 @@ let merge_files xs =
     (* to have a single topkey entry *)
     let xs = Hashtbl.find_all hfile_to_topkeys file in
     xs +> List.iter (fun topkey ->
-      pr (spf "<<%s/%s>>=" dir topkey);
-      pr (spf "<<%s>>" topkey);
-      pr "@";
+      pr (spf "--- %s/%s" dir topkey);
+      pr (spf "@{%s}" topkey);
+      pr "---";
       pr ""
     );
     

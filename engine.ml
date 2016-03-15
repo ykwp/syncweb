@@ -94,7 +94,7 @@ let s_of_chunkdef_body xs =
   | Code s -> s
   | ChunkName (s, i) -> 
       let spaces = generate_n_spaces i in
-      spaces ^ (spf "<<%s>>" s)
+      spaces ^ (spf "@{%s}" s)
   ) +> Common2.unlines
 
 
@@ -144,14 +144,14 @@ let show_diff stra strb =
 type mark1 = Regular1 | Start1 | End1 
 
 (* less: use pcre so can do .*? *)
-let regexp_chunkdef = Str.regexp "^<<\\(.*\\)>>=[ \t]*$" 
+let regexp_chunkdef = Str.regexp "^--- \\(.*\\)[ \t]*$" 
 
-let regexp_chunkdef_end = Str.regexp "^@[ \t]*$"
+let regexp_chunkdef_end = Str.regexp "^---[ \t]*$"
 
 (* (.*[^\@]* )<<([^<>@]+)>>(. * ) *)
 (* todo: more flexible ? *)
 let regexp_chunk_ref = Str.regexp 
-  "\\([ \t]*\\)<<\\(.*\\)>>[ \t]*$"
+  "\\([ \t]*\\)\@\{\\(.*\\)\}[ \t]*$"
 
 let key_and_index_chunk_ref_string s = 
   if s ==~ regexp_chunk_ref
@@ -412,7 +412,7 @@ let unparse_orig orig filename =
     | Tex xs -> 
         xs +> List.iter pr;
     | ChunkDef (def, body) -> 
-        let start = spf "<<%s>>=" def.chunkdef_key in
+        let start = spf "--- %s" def.chunkdef_key in
         let end_mark = def.chunkdef_end in
         pr start;
         body +> List.iter (function
@@ -420,7 +420,7 @@ let unparse_orig orig filename =
             pr s
         | ChunkName (s, indent) -> 
             Common2.do_n indent (fun () -> pr_no_nl " ");
-            let item = spf "<<%s>>" s in
+            let item = spf "@{%s}" s in
             pr item;
         );
         pr end_mark;
